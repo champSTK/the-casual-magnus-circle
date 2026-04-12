@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c4nuamj034wq2"]
+
+[ext_resource type="Script" uid="uid://bc1s1ms1jt415" path="res://enemies/Ranged.gd" id="1_4fq46"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1cwe7"]
+radius = 12.0
+
+[node name="Ranged" type="CharacterBody2D" unique_id=1648002827]
+script = ExtResource("1_4fq46")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1831911348]
+shape = SubResource("CircleShape2D_1cwe7")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=1602340650]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.08470764, 0.2663375, 0.696231, 1)
+
+[node name="HPBar" type="ColorRect" parent="." unique_id=1700097704]
+offset_left = -15.0
+offset_top = -22.0
+offset_right = 15.0
+offset_bottom = -18.0
+color = Color(0.17254902, 0.17254902, 0.17254902, 1)
+
+[node name="Fill" type="ColorRect" parent="HPBar" unique_id=1672954146]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 4.0
+color = Color(0.07058824, 0.94509804, 0.07058824, 1)

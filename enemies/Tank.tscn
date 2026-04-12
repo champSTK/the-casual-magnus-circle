@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://6eegswhi2y1l"]
+
+[ext_resource type="Script" uid="uid://ccvssmcg2nvh0" path="res://enemies/Tank.gd" id="1_tk45v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ufel"]
+radius = 19.0
+
+[node name="Tank" type="CharacterBody2D" unique_id=299466013]
+script = ExtResource("1_tk45v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2060092348]
+shape = SubResource("CircleShape2D_0ufel")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=1391680566]
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
+color = Color(0.56142306, 0.14433202, 0.67425317, 1)
+
+[node name="HPBar" type="ColorRect" parent="." unique_id=882725570]
+offset_left = -20.0
+offset_top = -28.0
+offset_right = 20.0
+offset_bottom = -23.0
+color = Color(0.17254902, 0.17254902, 0.17254902, 1)
+
+[node name="Fill" type="ColorRect" parent="HPBar" unique_id=1102359555]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 5.0
+color = Color(0.07058824, 0.94509804, 0.07058824, 1)
