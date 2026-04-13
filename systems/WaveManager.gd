@@ -17,8 +17,8 @@ var player:          CharacterBody2D = null
 @export var offset_radius:        float = 65.0
 @export var separation_radius:    float = 50.0
 @export var separation_strength:  float = 130.0
-@export var hp_scale_per_wave:    float = 0.12
-@export var speed_scale_per_wave: float = 0.06
+#@export var hp_scale_per_wave:    float = 0.12
+#@export var speed_scale_per_wave: float = 0.06
 
 var current_wave:   int   = 0
 var _between_waves: bool  = true
@@ -79,10 +79,10 @@ func _configure_enemy(enemy: EnemyBase, index: int, total: int) -> void:
 	var off_dist: float  = randf_range(offset_radius * 0.3, offset_radius)
 	enemy.set_target_offset(Vector2(cos(off_angle), sin(off_angle)) * off_dist)
 
-	var wave_mult: float  = 1.0 + float(current_wave - 1) * hp_scale_per_wave
-	enemy.max_hp          = int(float(enemy.max_hp) * wave_mult)
-	enemy.current_hp      = enemy.max_hp
-	enemy.move_speed     *= 1.0 + float(current_wave - 1) * speed_scale_per_wave
+	#var wave_mult: float  = 1.0 + float(current_wave - 1) * hp_scale_per_wave
+	#enemy.max_hp          = int(float(enemy.max_hp) * wave_mult)
+	#enemy.current_hp      = enemy.max_hp
+	#enemy.move_speed     *= 1.0 + float(current_wave - 1) * speed_scale_per_wave
 
 func _run_separation_pass() -> void:
 	var children: Array[Node] = []

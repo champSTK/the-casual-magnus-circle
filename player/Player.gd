@@ -20,6 +20,9 @@ var current_hp:      int    = max_hp
 var is_invincible:   bool   = false
 var spell_container: Node2D = null
 
+var is_shielded: bool = false
+var shield_broken: bool = false
+
 func _ready() -> void:
 	current_hp = max_hp
 	add_to_group("player")
@@ -41,7 +44,15 @@ func get_move_input() -> Vector2:
 func take_damage(amount: int) -> void:
 	if is_invincible:
 		return
+		
+	if is_shielded:
+		shield_broken = true   # mark shield as broken
+		is_shielded = false
+		print("brokes")
+		reset_color()
+		return
 	current_hp -= amount
+	print("hp")
 	_flash_damage()
 	CameraFollow.trigger_shake(self, 6.0)
 	if current_hp <= 0:
@@ -51,6 +62,22 @@ func take_damage(amount: int) -> void:
 	is_invincible = true
 	await get_tree().create_timer(invincible_time).timeout
 	is_invincible = false
+
+func activate_shield(duration: float) -> void:
+	if is_shielded:
+		return
+
+	is_shielded = true
+	shield_broken = false
+
+	# visual
+	visual.color = Color(0.3, 1.0, 1.0)
+
+	await get_tree().create_timer(duration).timeout
+	is_shielded = false
+	reset_color()
+	if not shield_broken:
+		heal(20)
 
 func heal(amount: int) -> void:
 	current_hp = min(current_hp + amount, max_hp)

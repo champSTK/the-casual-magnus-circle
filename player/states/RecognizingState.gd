@@ -6,13 +6,16 @@ func enter(_data: Dictionary = {}) -> void:
 
 	# 🔥 GET DRAW POSITION BEFORE CLEARING
 	var draw_pos: Vector2 = player.gesture_recognizer.get_draw_center()
+	
+	var draw_end: Vector2 = player.gesture_recognizer.get_last_point()
 
 	player.gesture_recognizer.clear()
 
 	if gesture_name != "":
 		state_machine.transition_to("CastingState", {
 			"gesture": gesture_name,
-			"draw_pos": draw_pos   # 🔥 PASS IT HERE
+			"draw_pos": draw_pos,
+			"draw_end": draw_end
 		})
 	else:
 		state_machine.transition_to("IdleState")

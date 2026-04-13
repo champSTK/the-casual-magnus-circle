@@ -13,6 +13,10 @@ func get_draw_center() -> Vector2:
 
 	return center / _points.size()
 
+func get_last_point() -> Vector2:
+	if _points.size() == 0:
+		return Vector2.ZERO
+	return _points[-1]
 
 func start_drawing(pos: Vector2):
 	_points.clear()
@@ -48,12 +52,18 @@ func recognize() -> String:
 		print("len:", total_len, " direct:", direct_len, " closure:", closure, " turns:", turns, " rot:", rotation)
 
 	# ── CIRCLE ───────────────────────
-	if total_len <2000 and closure < 200 and rotation > 6.0 and turns == 0:
+	if total_len >300 and total_len <2000 and closure < 200 and rotation > 6.0 and turns == 0:
 		return "circle"
 		
+	if total_len <300 and closure < 200 and rotation > 6.0 and turns == 0:
+		return "shield"
+		
 	# ── LINE ─────────────────────────
-	if total_len <1000 and direct_len > 100 and turns <= 1:
+	if total_len <350 and closure > 100 and turns <= 1:
 		return "line"
+
+	if closure > 400 and turns <= 1:
+		return "beam"
 
 	# ── TRIANGLE ─────────────────────
 	if total_len >1000 and closure < 310 and turns >= 2 and turns <= 4:

@@ -28,6 +28,9 @@ func _ready() -> void:
 	_spells["triangle"] = SpellEntry.new(80, 1.2, Color(0.7, 0.3, 1.0))
 	_spells["circle"]   = SpellEntry.new(50, 1.5, Color(1.0, 0.4, 0.2))
 	_spells["scribble"] = SpellEntry.new(20, 1.0, Color(1.0, 0.2, 0.8))
+	_spells["shield"] = SpellEntry.new(0,5.0,Color(0.3, 1.0, 1.0))
+	_spells["beam"] = SpellEntry.new(60, 1.0, Color(1.0, 0.2, 0.2))
+	
 	for key: String in _spells:
 		_cooldowns[key] = 0.0
 
@@ -38,7 +41,7 @@ func _process(delta: float) -> void:
 			_cooldowns[key] = cd - delta
 
 # ── API ───────────────────────────────────────────────────────
-func cast(gesture: String, draw_pos: Vector2) -> void:
+func cast(gesture: String, draw_pos: Vector2,draw_end: Vector2) -> void:
 	if not _spells.has(gesture):
 		return
 	if (_cooldowns[gesture] as float) > 0.0:
@@ -54,6 +57,8 @@ func cast(gesture: String, draw_pos: Vector2) -> void:
 		"triangle": _cast_lightning(entry)
 		"circle":   _cast_aoe(entry)
 		"scribble": _cast_chaos(entry)
+		"shield": _cast_shield(entry)
+		"beam": _cast_beam(entry, draw_end)
 
 func get_cooldown(gesture: String) -> float:
 	if not _spells.has(gesture):
@@ -62,8 +67,58 @@ func get_cooldown(gesture: String) -> float:
 
 func is_on_cooldown(gesture: String) -> bool:
 	return (_cooldowns.get(gesture, 0.0) as float) > 0.0
+	
+func _distance_point_to_segment(p: Vector2, a: Vector2, b: Vector2) -> float:
+	var ab: Vector2 = b - a
+	var t: float = (p - a).dot(ab) / ab.length_squared()
+	t = clamp(t, 0.0, 1.0)
+
+	var closest: Vector2 = a + ab * t
+	return p.distance_to(closest)	
 
 # ── Spell implementations ─────────────────────────────────────
+func _cast_beam(entry: SpellEntry, pos: Vector2) -> void:
+	var from: Vector2 = player.global_position
+	var to: Vector2   = pos
+
+	# 🔥 VISUAL BEAM
+	var line: Line2D = Line2D.new()
+	_get_container().add_child(line)
+
+	line.width         = 6.0
+	line.default_color = entry.color
+	line.points        = PackedVector2Array([from, to])
+
+	# 🔥 DAMAGE ENEMIES ALONG LINE
+	var enemies: Node = player.get_node_or_null("/root/Main/EnemyContainer")
+	if enemies:
+		for enemy in enemies.get_children():
+			if not enemy.has_method("take_damage"):
+				continue
+
+			var dist: float = _distance_point_to_segment(
+				enemy.global_position, from, to
+			)
+
+			if dist < 25.0:  # beam thickness
+				enemy.take_damage(entry.damage)
+
+	# 🔥 FADE OUT
+	var tween: Tween = line.create_tween()
+	tween.tween_property(line, "modulate:a", 0.0, 0.2)
+	tween.tween_callback(line.queue_free)
+
+	_screen_flash(entry.color, 0.1)
+	CameraFollow.trigger_shake(player, 6.0)
+
+
+
+func _cast_shield(entry: SpellEntry) -> void:
+	player.activate_shield(5.0)  # duration = 5 sec
+
+	_screen_flash(entry.color, 0.2)
+	CameraFollow.trigger_shake(player, 3.0)
+
 func _cast_slash(entry: SpellEntry) -> void:
 	var aim: Vector2           = _get_aim_direction()
 	var angles: Array[float]   = [-30.0, -15.0, 0.0, 15.0, 30.0]
