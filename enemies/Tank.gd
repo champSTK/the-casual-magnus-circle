@@ -8,6 +8,8 @@ extends EnemyBase
 @export var charge_duration: float = 0.6
 @export var charge_damage:   int   = 25
 
+@export var stop_distance: float = 60.0   # 🔥 NEW (prevents sticking)
+
 var _charge_timer:   float   = 2.0
 var _charging:       bool    = false
 var _charge_dir:     Vector2 = Vector2.ZERO
@@ -30,12 +32,25 @@ func _physics_process(delta: float) -> void:
 		_charge_elapsed += delta
 		if _charge_elapsed >= charge_duration:
 			_end_charge()
+
 	super._physics_process(delta)
 
 func compute_velocity(_delta: float) -> Vector2:
 	if _charging:
 		return _charge_dir * charge_speed
-	return get_player_direction() * move_speed
+
+	# 🔥 Use offset target (prevents clumping)
+	var target_pos = player.global_position + target_offset
+	var to_target = target_pos - global_position
+	var dist = to_target.length()
+
+	# 🔥 Smooth slowdown near player
+	var speed_factor = clamp(dist / stop_distance, 0.0, 1.0)
+
+	if dist > 5.0:
+		return to_target.normalized() * move_speed * speed_factor
+	else:
+		return Vector2.ZERO
 
 func _start_charge() -> void:
 	_charging       = true

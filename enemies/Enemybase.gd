@@ -25,6 +25,8 @@ var _is_dead:           bool            = false
 var _separation_force:  Vector2         = Vector2.ZERO
 var _target_offset:     Vector2         = Vector2.ZERO
 
+var target_offset: Vector2 = Vector2.ZERO
+
 func _ready() -> void:
 	current_hp     = max_hp
 	visual.color   = body_color
