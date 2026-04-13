@@ -8,7 +8,8 @@ func enter(data: Dictionary = {}) -> void:
 	if gesture == "":
 		state_machine.transition_to("IdleState")
 		return
-	player.spell_manager.cast(gesture)
+	var draw_pos: Vector2 = data.get("draw_pos", player.global_position)
+	player.spell_manager.cast(gesture, draw_pos)
 	player.visual.color = Color(1.0, 0.9, 0.2)
 	player.velocity     = Vector2.ZERO
 	await player.get_tree().create_timer(CAST_ANIM_TIME).timeout

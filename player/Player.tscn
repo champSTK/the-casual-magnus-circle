@@ -54,7 +54,5 @@ script = ExtResource("6_aqcbf")
 [node name="SpellManager" type="Node" parent="." unique_id=2081667756]
 script = ExtResource("7_gskgj")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=25817943]
-
-[node name="GestureCanvas" type="Node2D" parent="CanvasLayer" unique_id=1543357521]
+[node name="GestureCanvas" type="Node2D" parent="." unique_id=1543357521]
 script = ExtResource("2_x8kxw")

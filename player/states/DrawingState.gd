@@ -6,7 +6,7 @@ const SLOW_FACTOR: float = 0.3
 
 func enter(_data: Dictionary = {}) -> void:
 	print("DRAWING STATE ENTERED")
-	player.gesture_recognizer.start_drawing(get_viewport().get_mouse_position())
+	player.gesture_recognizer.start_drawing(player.get_global_mouse_position())
 	player.gesture_canvas.start_drawing()
 
 func exit() -> void:
@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 	player.velocity  = dir * player.move_speed * SLOW_FACTOR
 
 func update(_delta: float) -> void:
-	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var mouse_pos: Vector2 = player.get_global_mouse_position()
 	player.gesture_recognizer.add_point(mouse_pos)
 	player.gesture_canvas.add_point(mouse_pos)
 

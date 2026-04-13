@@ -5,6 +5,14 @@ const DEBUG = true
 var _points: Array[Vector2] = []
 
 # ── INPUT ─────────────────────────────
+func get_draw_center() -> Vector2:
+	var center: Vector2 = Vector2.ZERO
+
+	for p in _points:
+		center += p
+
+	return center / _points.size()
+
 
 func start_drawing(pos: Vector2):
 	_points.clear()
@@ -48,7 +56,7 @@ func recognize() -> String:
 		return "line"
 
 	# ── TRIANGLE ─────────────────────
-	if total_len >1200 and closure < 310 and turns > 2 and turns <= 4:
+	if total_len >1000 and closure < 310 and turns >= 2 and turns <= 4:
 		return "triangle"
 
 	# ── ZIGZAG ───────────────────────

@@ -11,7 +11,7 @@ signal died
 
 @onready var state_machine:      Node             = $StateMachine
 @onready var gesture_recognizer: Node             = $GestureRecognizer
-@onready var gesture_canvas:     Node2D           = $CanvasLayer/GestureCanvas
+@onready var gesture_canvas:     Node2D           = $GestureCanvas
 @onready var spell_manager:      Node             = $SpellManager
 @onready var collision_shape: CollisionShape2D    = $CollisionShape2D
 @onready var visual:          ColorRect           = $Visual

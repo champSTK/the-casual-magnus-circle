@@ -20,8 +20,9 @@ func start_drawing() -> void:
 	_fade_alpha = 1.0
 	queue_redraw()
 
-func add_point(screen_pos: Vector2) -> void:
-	_points.append(screen_pos)
+func add_point(global_pos: Vector2) -> void:
+	var local_pos: Vector2 = to_local(global_pos)
+	_points.append(local_pos)
 	queue_redraw()
 
 func stop_drawing() -> void:

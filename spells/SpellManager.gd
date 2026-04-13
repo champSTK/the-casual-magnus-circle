@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 			_cooldowns[key] = cd - delta
 
 # ── API ───────────────────────────────────────────────────────
-func cast(gesture: String) -> void:
+func cast(gesture: String, draw_pos: Vector2) -> void:
 	if not _spells.has(gesture):
 		return
 	if (_cooldowns[gesture] as float) > 0.0:
