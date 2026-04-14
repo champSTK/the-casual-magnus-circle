@@ -19,7 +19,7 @@ signal died
 var current_hp:      int    = max_hp
 var is_invincible:   bool   = false
 var spell_container: Node2D = null
-
+var shield_instance: Node2D = null
 var is_shielded: bool = false
 var shield_broken: bool = false
 
@@ -49,7 +49,9 @@ func take_damage(amount: int) -> void:
 		shield_broken = true   # mark shield as broken
 		is_shielded = false
 		print("brokes")
-		reset_color()
+		if is_instance_valid(shield_instance):
+			shield_instance.queue_free()
+			shield_instance = null
 		return
 	current_hp -= amount
 	print("hp")
@@ -70,17 +72,35 @@ func activate_shield(duration: float) -> void:
 	is_shielded = true
 	shield_broken = false
 
-	# visual
-	visual.color = Color(0.3, 1.0, 1.0)
-
+	# 🔥 spawn and STORE shield
+	var shield_scene = preload("res://spells/ShieldEffect.tscn")
+	shield_instance = shield_scene.instantiate()
+	add_child(shield_instance)
+	
 	await get_tree().create_timer(duration).timeout
+	# 🔥 if already broken → do nothing
+	if not is_shielded:
+		return
+
 	is_shielded = false
-	reset_color()
+
+	# 🔥 REMOVE VISUAL
+	if is_instance_valid(shield_instance):
+		shield_instance.queue_free()
+		shield_instance = null
+
 	if not shield_broken:
 		heal(20)
 
 func heal(amount: int) -> void:
 	current_hp = min(current_hp + amount, max_hp)
+	var heal_scene = preload("res://systems/HealText.tscn")
+	var heal_text = heal_scene.instantiate()
+
+	heal_text.global_position = global_position
+	get_parent().add_child(heal_text)
+
+	heal_text.setup(amount)
 
 func _flash_damage() -> void:
 	var orig: Color = visual.color

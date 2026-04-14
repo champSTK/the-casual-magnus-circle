@@ -8,6 +8,7 @@ extends Node2D
 @onready var wave_manager: Node      = $WaveManager
 @onready var hud_label: Label        = $HUD/Label
 @onready var game_over_label: Label  = $HUD/GameOverLabel
+@onready var pause_menu = $HUD/PauseMenu
 
 var score: int       = 0
 var is_game_over: bool = false
@@ -46,7 +47,20 @@ func _on_player_died() -> void:
 	get_tree().paused       = true
 	set_process_input(true)
 
+func toggle_pause():
+	get_tree().paused = not get_tree().paused
+	
+	if get_tree().paused:
+		pause_menu.show_menu()
+	else:
+		pause_menu.visible = false
+
 func _input(event: InputEvent) -> void:
 	if is_game_over and event.is_action_pressed("ui_accept"):
+		print("done")
 		get_tree().paused = false
 		get_tree().reload_current_scene()
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel") and not is_game_over:
+		toggle_pause()

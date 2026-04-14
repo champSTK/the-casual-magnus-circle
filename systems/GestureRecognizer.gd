@@ -55,7 +55,7 @@ func recognize() -> String:
 	if total_len >300 and total_len <2000 and closure < 200 and rotation > 6.0 and turns == 0:
 		return "circle"
 		
-	if total_len <300 and closure < 200 and rotation > 6.0 and turns == 0:
+	if total_len <350 and closure < 200 and rotation > 6.0 and turns == 0:
 		return "shield"
 		
 	# ── LINE ─────────────────────────
@@ -66,7 +66,7 @@ func recognize() -> String:
 		return "beam"
 
 	# ── TRIANGLE ─────────────────────
-	if total_len >1000 and closure < 310 and turns >= 2 and turns <= 4:
+	if total_len <3000 and total_len >1000 and closure < 310 and turns >= 2 and turns <= 4:
 		return "triangle"
 
 	# ── ZIGZAG ───────────────────────

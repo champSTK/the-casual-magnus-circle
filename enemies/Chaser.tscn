@@ -9,14 +9,14 @@ radius = 14.0
 collision_layer = 2
 script = ExtResource("1_uo68y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=205894261]
-shape = SubResource("CircleShape2D_yn02u")
-
 [node name="Visual" type="ColorRect" parent="." unique_id=305498688]
 offset_left = -14.0
 offset_top = -14.0
 offset_right = 14.0
 offset_bottom = 14.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=205894261]
+shape = SubResource("CircleShape2D_yn02u")
 
 [node name="HPBar" type="ColorRect" parent="." unique_id=1407221883]
 offset_left = -15.0

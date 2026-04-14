@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://di3e13bgtow08" path="res://Camerafollow.gd" id="2_r0du0"]
 [ext_resource type="PackedScene" uid="uid://clyg3o35ckjt4" path="res://player/Player.tscn" id="2_uu6xs"]
 [ext_resource type="Script" uid="uid://b3pxodvvdv01l" path="res://systems/WaveManager.gd" id="4_cm0pq"]
+[ext_resource type="Script" uid="uid://bemu8wefh7bsg" path="res://PauseMenu.gd" id="5_fos0i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glv2v"]
 size = Vector2(960, 20)
@@ -129,3 +130,58 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="PauseMenu" type="Control" parent="HUD" unique_id=1764290314]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_fos0i")
+
+[node name="ColorRect" type="ColorRect" parent="HUD/PauseMenu" unique_id=941682458]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 662.0
+color = Color(0, 0, 0, 0.3)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PauseMenu" unique_id=183380896]
+layout_mode = 0
+offset_left = 199.0
+offset_top = 86.0
+offset_right = 957.0
+offset_bottom = 507.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Paused" type="Label" parent="HUD/PauseMenu/VBoxContainer" unique_id=462111509]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="Resume" type="Button" parent="HUD/PauseMenu/VBoxContainer" unique_id=1073458851]
+process_mode = 3
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Resume"
+
+[node name="Restart" type="Button" parent="HUD/PauseMenu/VBoxContainer" unique_id=962145699]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Restart"
+
+[node name="Quit To Menu" type="Button" parent="HUD/PauseMenu/VBoxContainer" unique_id=2075321353]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit To Menu"
+
+[connection signal="pressed" from="HUD/PauseMenu/VBoxContainer/Resume" to="HUD/PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="HUD/PauseMenu/VBoxContainer/Restart" to="HUD/PauseMenu" method="_on_restart_pressed"]
+[connection signal="pressed" from="HUD/PauseMenu/VBoxContainer/Quit To Menu" to="HUD/PauseMenu" method="_on_quit_to_menu_pressed"]

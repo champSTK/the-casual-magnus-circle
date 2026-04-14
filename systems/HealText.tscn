@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://djmfgue1xjxhj"]
+
+[ext_resource type="Script" uid="uid://boy44ppbcwbps" path="res://systems/HealText.gd" id="1_veor3"]
+
+[node name="HealText" type="Node2D" unique_id=605129942]
+script = ExtResource("1_veor3")
+
+[node name="Label" type="Label" parent="." unique_id=1521665772]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.5847179, 1, 0.58383155, 1)
+theme_override_font_sizes/font_size = 30
+text = "+"

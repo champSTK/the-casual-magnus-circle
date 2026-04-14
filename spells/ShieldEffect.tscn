@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dauch8dl7udxg"]
+
+[ext_resource type="Script" uid="uid://rma7kf45ikfb" path="res://spells/ShieldEffect.gd" id="1_1vyyu"]
+
+[node name="ShieldEffect" type="Node2D" unique_id=1987457985]
+script = ExtResource("1_1vyyu")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1640678264]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+color = Color(0, 0.8548469, 0.43917835, 0.4)
