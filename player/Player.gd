@@ -4,6 +4,7 @@
 extends CharacterBody2D
 
 signal died
+signal hp_changed(current_hp: int)
 
 @export var move_speed:      float = 220.0
 @export var max_hp:          int   = 100
@@ -54,7 +55,8 @@ func take_damage(amount: int) -> void:
 			shield_instance = null
 		return
 	current_hp -= amount
-	print("hp")
+	hp_changed.emit(current_hp)
+	
 	_flash_damage()
 	CameraFollow.trigger_shake(self, 6.0)
 	if current_hp <= 0:
@@ -94,6 +96,7 @@ func activate_shield(duration: float) -> void:
 
 func heal(amount: int) -> void:
 	current_hp = min(current_hp + amount, max_hp)
+	hp_changed.emit(current_hp)
 	var heal_scene = preload("res://systems/HealText.tscn")
 	var heal_text = heal_scene.instantiate()
 

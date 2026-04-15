@@ -9,9 +9,14 @@ extends Node2D
 @onready var hud_label: Label        = $HUD/Label
 @onready var game_over_label: Label  = $HUD/GameOverLabel
 @onready var pause_menu = $HUD/PauseMenu
+@onready var fps_label: Label = $HUD/FPSLabel
 
 var score: int       = 0
 var is_game_over: bool = false
+var fps_timer: float = 0.0
+var fps_update_rate: float = 0.25
+var show_fps: bool = true
+
 
 func _ready() -> void:
 	wave_manager.enemy_container = enemy_container
@@ -20,12 +25,25 @@ func _ready() -> void:
 	player.died.connect(_on_player_died)
 	player.spell_container = spell_container
 	game_over_label.visible = false
+	player.hp_changed.connect(_on_hp_changed)
+	fps_label.visible = show_fps
 	update_hud()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if is_game_over:
 		return
-	update_hud()
+	fps_timer -= delta
+	
+	if fps_timer <= 0.0:
+		var fps: int = Engine.get_frames_per_second()
+		fps_label.text = "FPS: %d" % fps
+		
+		fps_timer = fps_update_rate
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_fps"):
+		show_fps = not show_fps
+		fps_label.visible = show_fps
 
 func update_hud() -> void:
 	hud_label.text = "HP: %d  |  Wave: %d  |  Score: %d" % [
@@ -36,9 +54,14 @@ func update_hud() -> void:
 
 func add_score(amount: int) -> void:
 	score += amount
+	update_hud()
 
 func _on_wave_started(wave_number: int) -> void:
 	print("Wave %d started!" % wave_number)
+	update_hud()
+	
+func _on_hp_changed(_hp: int) -> void:
+	update_hud()
 
 func _on_player_died() -> void:
 	is_game_over            = true
@@ -54,12 +77,6 @@ func toggle_pause():
 		pause_menu.show_menu()
 	else:
 		pause_menu.visible = false
-
-func _input(event: InputEvent) -> void:
-	if is_game_over and event.is_action_pressed("ui_accept"):
-		print("done")
-		get_tree().paused = false
-		get_tree().reload_current_scene()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel") and not is_game_over:
