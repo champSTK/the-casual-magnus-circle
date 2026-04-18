@@ -10,12 +10,14 @@ extends Node2D
 @onready var game_over_label: Label  = $HUD/GameOverLabel
 @onready var pause_menu = $HUD/PauseMenu
 @onready var fps_label: Label = $HUD/FPSLabel
+@onready var pool = $ObjectPool
 
 var score: int       = 0
 var is_game_over: bool = false
 var fps_timer: float = 0.0
 var fps_update_rate: float = 0.25
 var show_fps: bool = true
+var debug_timer := 0.0
 
 
 func _ready() -> void:
@@ -39,6 +41,26 @@ func _process(delta: float) -> void:
 		fps_label.text = "FPS: %d" % fps
 		
 		fps_timer = fps_update_rate
+	debug_timer -= delta
+	
+	if debug_timer <= 0:
+		_print_pool_debug()
+		debug_timer = 1.0	
+
+func _print_pool_debug():
+	if not pool:
+		return
+	
+	print("\n--- POOL DEBUG ---")
+	
+	for scene in pool.pools.keys():
+		var pooled = pool.pools[scene].size()
+		var active = pool.active[scene].size()
+		
+		print(scene.resource_path.get_file(), 
+			" | active:", active, 
+			" | pooled:", pooled,
+			"TOTAL:", pooled + active)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_fps"):

@@ -7,6 +7,8 @@ extends EnemyBase
 @export var shoot_interval:     float = 2.0
 @export var projectile_speed:   float = 220.0
 @export var projectile_damage:  int   = 8
+@onready var pool = get_node("/root/Main/ObjectPool")
+var projectile_scene = preload("res://enemies/EnemyProjectile.tscn")
 
 var _shoot_timer: float = 0.5
 
@@ -38,11 +40,20 @@ func compute_velocity(_delta: float) -> Vector2:
 func _shoot() -> void:
 	if not player:
 		return
-	var container_node: Node = get_tree().current_scene.get_node_or_null("SpellContainer")
-	if not container_node:
-		return
-	var proj: Node   = preload("res://enemies/EnemyProjectile.tscn").instantiate()
-	container_node.add_child(proj)
-	proj.global_position = global_position
-	var dir: Vector2     = get_player_direction().rotated(randf_range(-0.15, 0.15))
-	proj.setup(dir, projectile_speed, projectile_damage, Color(0.3, 0.7, 1.0), 2.5, 6.0)
+	
+	var dir: Vector2 = get_player_direction().rotated(randf_range(-0.15, 0.15))
+	
+	var proj = pool.get_object(projectile_scene)
+	
+	proj.pool_owner = pool
+	proj.pool_scene = projectile_scene
+	
+	proj.activate(
+		global_position,
+		dir,
+		projectile_speed,
+		projectile_damage,
+		Color(0.3, 0.7, 1.0),
+		2.5,
+		6.0
+	)

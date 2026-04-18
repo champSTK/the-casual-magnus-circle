@@ -4,6 +4,8 @@
 
 extends Area2D
 
+var pool_owner
+var pool_scene
 var _direction: Vector2 = Vector2.RIGHT
 var _speed:     float   = 220.0
 var _damage:    int     = 8
@@ -37,16 +39,36 @@ func setup(
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
+func activate(pos, dir, speed, damage, color, lifetime, size):
+	global_position = pos
+	
+	setup(dir, speed, damage, color, lifetime, size)
+	
+	set_deferred("monitoring", true)
+	set_deferred("monitorable", true)
+	collision.set_deferred("disabled", false)
+	
+	visible = true
+	set_physics_process(true)
+	
+func on_pool_return():
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
+	collision.set_deferred("disabled", true)	
+
 func _physics_process(delta: float) -> void:
 	position  += _direction * _speed * delta
 	_lifetime -= delta
 	if _lifetime <= 0.0:
-		queue_free()
+		if pool_owner:
+			pool_owner.return_object(pool_scene, self)
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			body.take_damage(_damage)
-		queue_free()
+		if pool_owner:
+			pool_owner.return_object(pool_scene, self)
 	elif body is StaticBody2D:
-		queue_free()
+		if pool_owner:
+			pool_owner.return_object(pool_scene, self)
