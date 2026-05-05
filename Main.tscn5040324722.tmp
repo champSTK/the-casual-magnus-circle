@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://crtstcuba61ux"]
+
+[ext_resource type="Script" uid="uid://bedekfyem7kbl" path="res://Main.gd" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://di3e13bgtow08" path="res://Camerafollow.gd" id="2_r0du0"]
+[ext_resource type="PackedScene" uid="uid://clyg3o35ckjt4" path="res://player/Player.tscn" id="2_uu6xs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glv2v"]
+size = Vector2(960, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu6xs"]
+size = Vector2(960, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
+size = Vector2(20, 960)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0pq"]
+size = Vector2(20, 960)
+
+[node name="Main" type="Node2D" unique_id=1766135970]
+script = ExtResource("1_glv2v")
+
+[node name="Background" type="ColorRect" parent="." unique_id=614700968]
+z_index = -1
+offset_left = -1000.0
+offset_top = -1000.0
+offset_right = 1000.0
+offset_bottom = 1000.0
+color = Color(0.29337206, 0.29337206, 0.3491902, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1367675832]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+script = ExtResource("2_r0du0")
+
+[node name="Arena" type="Node2D" parent="." unique_id=1777195983]
+
+[node name="Wall_Top" type="StaticBody2D" parent="Arena" unique_id=471607142]
+position = Vector2(480, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Top" unique_id=1053876157]
+position = Vector2(-478, -706)
+shape = SubResource("RectangleShape2D_glv2v")
+
+[node name="Wall_Left" type="StaticBody2D" parent="Arena" unique_id=524687055]
+position = Vector2(960, 960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Left" unique_id=2048800008]
+position = Vector2(-946, -734)
+shape = SubResource("RectangleShape2D_uu6xs")
+
+[node name="Wall_Right" type="StaticBody2D" parent="Arena" unique_id=494219996]
+position = Vector2(480, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Right" unique_id=124862869]
+position = Vector2(-88, -452)
+shape = SubResource("RectangleShape2D_r0du0")
+
+[node name="Wall_Bottom" type="StaticBody2D" parent="Arena" unique_id=1567404779]
+position = Vector2(1440, 1440)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Bottom" unique_id=717770225]
+position = Vector2(-1836, -1379)
+shape = SubResource("RectangleShape2D_cm0pq")
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=2047568842]
+
+[node name="SpellContainer" type="Node2D" parent="." unique_id=2038529070]
+
+[node name="Player" parent="." unique_id=586747092 instance=ExtResource("2_uu6xs")]

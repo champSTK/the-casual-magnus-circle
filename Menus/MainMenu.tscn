@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://o3bpi3jatrks"]
+
+[ext_resource type="Script" uid="uid://b7wg7f60qhvf3" path="res://Menus/MainMenu.gd" id="1_r8dbq"]
+[ext_resource type="Texture2D" uid="uid://h3s7sgbq45d2" path="res://clonemagusbackground.png" id="2_7ihqj"]
+[ext_resource type="Texture2D" uid="uid://cb0db76n0vuwt" path="res://clonemaguslogo.webp" id="3_7ihqj"]
+
+[node name="MainMenu" type="Node" unique_id=481289927]
+script = ExtResource("1_r8dbq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1204229010]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1243001657]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=2089890845]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_7ihqj")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=1143350752]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -269.0
+offset_right = 312.0
+offset_bottom = 338.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Logo" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer" unique_id=279569011]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+texture = ExtResource("3_7ihqj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Start" type="Button" parent="CanvasLayer/Control/VBoxContainer" unique_id=751438337]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Start Game"
+
+[node name="Quit" type="Button" parent="CanvasLayer/Control/VBoxContainer" unique_id=188080383]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit"
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

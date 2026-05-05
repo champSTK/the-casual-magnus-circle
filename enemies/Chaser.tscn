@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dn6vor4ah36wt"]
+
+[ext_resource type="Script" uid="uid://bl0eelmgolam8" path="res://enemies/Chaser.gd" id="1_uo68y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yn02u"]
+radius = 14.0
+
+[node name="Chaser" type="CharacterBody2D" unique_id=1247633870]
+collision_layer = 2
+script = ExtResource("1_uo68y")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=305498688]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=205894261]
+shape = SubResource("CircleShape2D_yn02u")
+
+[node name="HPBar" type="ColorRect" parent="." unique_id=1407221883]
+offset_left = -15.0
+offset_top = -22.0
+offset_right = 15.0
+offset_bottom = -18.0
+color = Color(0.1728327, 0.17283267, 0.17283267, 1)
+
+[node name="Fill" type="ColorRect" parent="HPBar" unique_id=1871867070]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 4.0
+color = Color(0.07058824, 0.94509804, 0.07058824, 1)

@@ -1,0 +1,442 @@
+[gd_scene format=3 uid="uid://crtstcuba61ux"]
+
+[ext_resource type="Script" uid="uid://bedekfyem7kbl" path="res://Main.gd" id="1_glv2v"]
+[ext_resource type="Script" uid="uid://cb5wyli8f2k4w" path="res://enemies/ObjectPool.gd" id="2_lgr22"]
+[ext_resource type="Script" uid="uid://di3e13bgtow08" path="res://Camerafollow.gd" id="2_r0du0"]
+[ext_resource type="PackedScene" uid="uid://clyg3o35ckjt4" path="res://player/Player.tscn" id="2_uu6xs"]
+[ext_resource type="Texture2D" uid="uid://bhjmma677xf2p" path="res://backarena.webp" id="3_5mvff"]
+[ext_resource type="Script" uid="uid://b3pxodvvdv01l" path="res://systems/WaveManager.gd" id="4_cm0pq"]
+[ext_resource type="Script" uid="uid://cqx1ad7lmov3i" path="res://hud.gd" id="5_3dxm6"]
+[ext_resource type="Script" uid="uid://bemu8wefh7bsg" path="res://PauseMenu.gd" id="5_fos0i"]
+[ext_resource type="Script" uid="uid://b2xul0ym32sql" path="res://Menus/GameOverPanel.gd" id="7_sc1dx"]
+[ext_resource type="Script" uid="uid://bsb1ya4dbki2j" path="res://systems/AudioManager.gd" id="8_trn2v"]
+[ext_resource type="Script" uid="uid://v750qsrluei3" path="res://spells/SpellUI.gd" id="9_kjvhd"]
+[ext_resource type="Script" uid="uid://capmifqs4n6n2" path="res://spells/SpellIcon.gd" id="10_5tuhn"]
+[ext_resource type="Texture2D" uid="uid://c553frx7u1tmd" path="res://spells/icons/slashicon.webp" id="11_devvj"]
+[ext_resource type="Texture2D" uid="uid://loptb2aoy2qm" path="res://spells/icons/shieldicon.webp" id="12_bg4s2"]
+[ext_resource type="Texture2D" uid="uid://bkfralk18wl57" path="res://spells/icons/circleicon.webp" id="13_3b0ty"]
+[ext_resource type="Texture2D" uid="uid://bhve6k5jm6lkj" path="res://spells/icons/lasericon.webp" id="14_hhcpw"]
+[ext_resource type="Texture2D" uid="uid://b1vehrgg8knqv" path="res://spells/icons/triangleicon.webp" id="15_mxvw5"]
+[ext_resource type="Texture2D" uid="uid://bultphvyi3xft" path="res://spells/icons/scribbleicon.webp" id="16_mxvw5"]
+[ext_resource type="AudioStream" uid="uid://bvke542nbpmfj" path="res://audio/diebycircle.ogg" id="19_hri7i"]
+[ext_resource type="AudioStream" uid="uid://c8v4abl4lbd2r" path="res://audio/slash.ogg" id="20_w3rk5"]
+[ext_resource type="AudioStream" uid="uid://ic35bulcs8i5" path="res://audio/circlespell.ogg" id="21_5mvff"]
+[ext_resource type="AudioStream" uid="uid://cqwfjr02x2kqf" path="res://audio/diebylightning1.ogg" id="22_oye8v"]
+[ext_resource type="AudioStream" uid="uid://crqrp5pebicek" path="res://audio/laserspell.ogg" id="23_40n85"]
+[ext_resource type="AudioStream" uid="uid://di3h4h453jgpx" path="res://audio/shieldup.ogg" id="24_gb15f"]
+[ext_resource type="AudioStream" uid="uid://dcp2s4koukwgg" path="res://audio/shieldbroken.ogg" id="25_sph85"]
+[ext_resource type="AudioStream" uid="uid://cjlhin2q34icb" path="res://audio/playerhit.ogg" id="26_o7g6l"]
+[ext_resource type="AudioStream" uid="uid://36vqc2l421mb" path="res://audio/backgroundmusic.ogg" id="27_sqvbp"]
+[ext_resource type="AudioStream" uid="uid://c2blxcqj0atwp" path="res://audio/deathd.ogg" id="27_vi5kq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5mvff"]
+size = Vector2(995, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu6xs"]
+size = Vector2(960, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
+size = Vector2(20, 960)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cm0pq"]
+size = Vector2(20, 960)
+
+[node name="Main" type="Node2D" unique_id=1766135970]
+script = ExtResource("1_glv2v")
+
+[node name="ObjectPool" type="Node" parent="." unique_id=882850513]
+script = ExtResource("2_lgr22")
+
+[node name="Background" type="ColorRect" parent="." unique_id=614700968]
+z_index = -1
+offset_left = -818.0
+offset_top = -619.0
+offset_right = 831.0
+offset_bottom = 505.0
+color = Color(0.29337206, 0.29337206, 0.3491902, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1367675832]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+script = ExtResource("2_r0du0")
+
+[node name="Arena" type="Node2D" parent="." unique_id=1777195983]
+
+[node name="Wall_Top" type="StaticBody2D" parent="Arena" unique_id=471607142]
+position = Vector2(480, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Top" unique_id=1053876157]
+position = Vector2(-494, -695)
+shape = SubResource("RectangleShape2D_5mvff")
+
+[node name="Wall_Left" type="StaticBody2D" parent="Arena" unique_id=524687055]
+position = Vector2(960, 960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Left" unique_id=2048800008]
+position = Vector2(-946, -734)
+shape = SubResource("RectangleShape2D_uu6xs")
+
+[node name="Wall_Right" type="StaticBody2D" parent="Arena" unique_id=494219996]
+position = Vector2(480, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Right" unique_id=124862869]
+position = Vector2(-88, -452)
+shape = SubResource("RectangleShape2D_r0du0")
+
+[node name="ColorRect" type="ColorRect" parent="Arena/Wall_Right" unique_id=1904752339]
+z_index = -1
+offset_left = -2317.0
+offset_top = -1722.0
+offset_right = 1469.0
+offset_bottom = 586.0
+color = Color(0.44313726, 0.015686275, 0.67058825, 1)
+
+[node name="Wall_Bottom" type="StaticBody2D" parent="Arena" unique_id=1567404779]
+position = Vector2(1440, 1440)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/Wall_Bottom" unique_id=717770225]
+position = Vector2(-1836, -1379)
+shape = SubResource("RectangleShape2D_cm0pq")
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=2047568842]
+
+[node name="SpellContainer" type="Node2D" parent="." unique_id=2038529070]
+
+[node name="Player" parent="." unique_id=586747092 instance=ExtResource("2_uu6xs")]
+
+[node name="Background2" type="TextureRect" parent="." unique_id=1261710923]
+z_index = -1
+offset_left = -426.0
+offset_top = -250.0
+offset_right = 424.0
+offset_bottom = 263.0
+texture = ExtResource("3_5mvff")
+
+[node name="WaveManager" type="Node" parent="." unique_id=2022430982]
+script = ExtResource("4_cm0pq")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=393088375]
+process_mode = 3
+script = ExtResource("5_3dxm6")
+
+[node name="Label" type="Label" parent="HUD" unique_id=73812487]
+offset_right = 225.0
+offset_bottom = 29.0
+theme_override_font_sizes/font_size = 20
+
+[node name="GameOverPanel" type="Control" parent="HUD" unique_id=1398011238]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_sc1dx")
+
+[node name="Background" type="ColorRect" parent="HUD/GameOverPanel" unique_id=282721673]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.70000005)
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD/GameOverPanel" unique_id=852532819]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/GameOverPanel/CenterContainer" unique_id=202102290]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="HUD/GameOverPanel/CenterContainer/VBoxContainer" unique_id=945592756]
+layout_mode = 2
+text = "GAME OVER"
+
+[node name="ScoreLabel" type="Label" parent="HUD/GameOverPanel/CenterContainer/VBoxContainer" unique_id=1438519490]
+layout_mode = 2
+text = "Score:0"
+
+[node name="HintLabel" type="Label" parent="HUD/GameOverPanel/CenterContainer/VBoxContainer" unique_id=1785713209]
+layout_mode = 2
+text = "Press Enter to Restart"
+
+[node name="MenuButton" type="Button" parent="HUD/GameOverPanel/CenterContainer/VBoxContainer" unique_id=1231467546]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="FlashRect" type="ColorRect" parent="HUD" unique_id=2009540862]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="PauseMenu" type="Control" parent="HUD" unique_id=1764290314]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_fos0i")
+
+[node name="ColorRect" type="ColorRect" parent="HUD/PauseMenu" unique_id=941682458]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PauseMenu" unique_id=183380896]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Paused" type="Label" parent="HUD/PauseMenu/VBoxContainer" unique_id=462111509]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="Resume" type="Button" parent="HUD/PauseMenu/VBoxContainer" unique_id=1073458851]
+process_mode = 3
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Resume"
+
+[node name="Restart" type="Button" parent="HUD/PauseMenu/VBoxContainer" unique_id=962145699]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Restart"
+
+[node name="Quit To Menu" type="Button" parent="HUD/PauseMenu/VBoxContainer" unique_id=2075321353]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit To Menu"
+
+[node name="MusicTitle" type="Label" parent="HUD/PauseMenu/VBoxContainer" unique_id=442642574]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Music"
+horizontal_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="HUD/PauseMenu/VBoxContainer" unique_id=1111493520]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXTitle" type="Label" parent="HUD/PauseMenu/VBoxContainer" unique_id=1086306503]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "SFX"
+horizontal_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="HUD/PauseMenu/VBoxContainer" unique_id=235974980]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SpellUI" type="Control" parent="HUD" unique_id=1606214728]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("9_kjvhd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/SpellUI" unique_id=1120259236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 45
+alignment = 1
+
+[node name="line" type="Control" parent="HUD/SpellUI/HBoxContainer" unique_id=465290790]
+layout_mode = 2
+script = ExtResource("10_5tuhn")
+
+[node name="Cooldown" type="ColorRect" parent="HUD/SpellUI/HBoxContainer/line" unique_id=1412014765]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Icon" type="TextureRect" parent="HUD/SpellUI/HBoxContainer/line" unique_id=512004012]
+layout_mode = 0
+offset_left = -51.0
+offset_top = 5.0
+offset_right = 9.0
+offset_bottom = 65.0
+texture = ExtResource("11_devvj")
+expand_mode = 1
+
+[node name="shield" type="Control" parent="HUD/SpellUI/HBoxContainer" unique_id=1926740291]
+layout_mode = 2
+script = ExtResource("10_5tuhn")
+
+[node name="Cooldown" type="ColorRect" parent="HUD/SpellUI/HBoxContainer/shield" unique_id=506121899]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Icon" type="TextureRect" parent="HUD/SpellUI/HBoxContainer/shield" unique_id=70255458]
+layout_mode = 0
+offset_left = -23.0
+offset_top = 5.0
+offset_right = 37.0
+offset_bottom = 65.0
+texture = ExtResource("12_bg4s2")
+expand_mode = 1
+
+[node name="circle" type="Control" parent="HUD/SpellUI/HBoxContainer" unique_id=331207055]
+layout_mode = 2
+script = ExtResource("10_5tuhn")
+
+[node name="Cooldown" type="ColorRect" parent="HUD/SpellUI/HBoxContainer/circle" unique_id=51750396]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Icon" type="TextureRect" parent="HUD/SpellUI/HBoxContainer/circle" unique_id=1188017312]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 65.0
+offset_bottom = 65.0
+texture = ExtResource("13_3b0ty")
+expand_mode = 1
+
+[node name="beam" type="Control" parent="HUD/SpellUI/HBoxContainer" unique_id=490474753]
+layout_mode = 2
+script = ExtResource("10_5tuhn")
+
+[node name="Cooldown" type="ColorRect" parent="HUD/SpellUI/HBoxContainer/beam" unique_id=2092461306]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Icon" type="TextureRect" parent="HUD/SpellUI/HBoxContainer/beam" unique_id=374971373]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 5.0
+offset_right = 93.0
+offset_bottom = 65.0
+texture = ExtResource("14_hhcpw")
+expand_mode = 1
+
+[node name="triangle" type="Control" parent="HUD/SpellUI/HBoxContainer" unique_id=1257941880]
+layout_mode = 2
+script = ExtResource("10_5tuhn")
+
+[node name="Cooldown" type="ColorRect" parent="HUD/SpellUI/HBoxContainer/triangle" unique_id=1996832257]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Icon" type="TextureRect" parent="HUD/SpellUI/HBoxContainer/triangle" unique_id=452494057]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 5.0
+offset_right = 121.0
+offset_bottom = 65.0
+texture = ExtResource("15_mxvw5")
+expand_mode = 1
+
+[node name="scribble" type="Control" parent="HUD/SpellUI/HBoxContainer" unique_id=263305205]
+layout_mode = 2
+script = ExtResource("10_5tuhn")
+
+[node name="Cooldown" type="ColorRect" parent="HUD/SpellUI/HBoxContainer/scribble" unique_id=684701334]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Icon" type="TextureRect" parent="HUD/SpellUI/HBoxContainer/scribble" unique_id=1597501449]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 5.0
+offset_right = 149.0
+offset_bottom = 65.0
+texture = ExtResource("16_mxvw5")
+expand_mode = 1
+
+[node name="FPSLabel" type="Label" parent="HUD" unique_id=874231924]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
+
+[node name="AudioManager" type="Node" parent="." unique_id=837004394]
+script = ExtResource("8_trn2v")
+snd_enemy_die_circle = ExtResource("19_hri7i")
+snd_spell_line = ExtResource("20_w3rk5")
+snd_spell_circle = ExtResource("21_5mvff")
+snd_spell_lightning = ExtResource("22_oye8v")
+snd_spell_beam = ExtResource("23_40n85")
+snd_spell_shield = ExtResource("24_gb15f")
+snd_spell_shieldbroken = ExtResource("25_sph85")
+snd_player_hit = ExtResource("26_o7g6l")
+snd_player_die = ExtResource("27_vi5kq")
+music_main = ExtResource("27_sqvbp")
+
+[connection signal="pressed" from="HUD/GameOverPanel/CenterContainer/VBoxContainer/MenuButton" to="HUD/GameOverPanel" method="_on_menu_button_pressed"]
+[connection signal="pressed" from="HUD/PauseMenu/VBoxContainer/Resume" to="HUD/PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="HUD/PauseMenu/VBoxContainer/Restart" to="HUD/PauseMenu" method="_on_restart_pressed"]
+[connection signal="pressed" from="HUD/PauseMenu/VBoxContainer/Quit To Menu" to="HUD/PauseMenu" method="_on_quit_to_menu_pressed"]
